@@ -30,39 +30,62 @@ class Board
     end
 
     def self.victory?
-        
+        if vertical_checker || horizontal_checker || diagonal_checker
+            return true
+        end
     end
 
-    private
-
     def self.vertical_checker
-
+        case
+        when (@@position[0]) && (@@position[3]) && (@@position[6]) == "X" || (@@position[0]) && (@@position[3]) && (@@position[6]) == "O"
+            return true
+        when (@@position[1]) && (@@position[4]) && (@@position[7]) == "X" || (@@position[1]) && (@@position[4]) && (@@position[7]) == "O"
+            return true
+        when (@@position[2]) && (@@position[5]) && (@@position[8]) == "X" || (@@position[2]) && (@@position[5]) && (@@position[8]) == "O"
+            return true
+        end
     end
 
     def self.horizontal_checker
-
+        case
+        when (@@position[0]) && (@@position[1]) && (@@position[2]) == "X" || (@@position[0]) && (@@position[1]) && (@@position[2]) == "O"
+            return true
+        when (@@position[3]) && (@@position[4]) && (@@position[5]) == "X" || (@@position[3]) && (@@position[4]) && (@@position[5]) == "O"
+            return true
+        when (@@position[6]) && (@@position[7]) && (@@position[8]) == "X" || (@@position[6]) && (@@position[7]) && (@@position[8]) == "O"
+            return true
+        end
     end
 
     def self.diagonal_checker
-
+        case
+        when (@@position[0]) && (@@position[4]) && (@@position[8]) == "X" || (@@position[0]) && (@@position[4]) && (@@position[8]) == "O"
+            return true
+        when (@@position[2]) && (@@position[4]) && (@@position[6]) == "X" || (@@position[2]) && (@@position[4]) && (@@position[6]) == "O"
+            return true
+        end
     end
 end
 
 def game(player_one, player_two)
     puts "Bem vindo ao jogo-da-velha!"
+    Board.show_table
     for i in 1..9 do
-        Board.show_table
         puts ""
         puts "Jogador1 - Escolha uma posição do tabuleiro: "
         pos = gets.chomp.to_i
-        Board.put_table(pos, player_one)
+        Board.put_table(pos, player_one.to_s)
         puts "Feito!"
         puts "Jogador2 - Escolha uma posição do tabuleiro: "
         pos = gets.chomp.to_i
-        Board.put_table(pos, player_two)
+        Board.put_table(pos, player_two.to_s)
         puts "Aqui está o tabuleiro: "
+        Board.show_table
         #victory check
-
+        if Board.victory?
+            puts "Temos um vencedor! Parabéns!"
+            break
+        end
     end
 end
 
